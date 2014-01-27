@@ -10,7 +10,11 @@ module AMQParty
       Rack::AMQP::Client.with_client(host: 'localhost') do |client|
         Timeout.timeout(10) do
           method_name = http_method.name.split(/::/).last.upcase
-          body = HTTParty::HashConversions.to_params(options[:body]) || ""
+          body = if options[:body]
+            HTTParty::HashConversions.to_params(options[:body])
+          else
+            ""
+          end
           response = client.request(uri.to_s.sub('amqp://',''), {body: body, http_method: method_name, timeout: 5})
           # TODO convert repsonse into HTTPResponse and assign to last_response
           klass = Net::HTTPResponse.send(:response_class,response.response_code.to_s)
