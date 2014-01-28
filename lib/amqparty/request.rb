@@ -6,16 +6,14 @@ module AMQParty
       setup_raw_request
       chunked_body = nil
 
-      # binding.pry
+      #binding.pry
       Rack::AMQP::Client.with_client(host: 'localhost') do |client|
         Timeout.timeout(10) do
           method_name = http_method.name.split(/::/).last.upcase
-          body = if options[:body]
-            HTTParty::HashConversions.to_params(options[:body])
-          else
-            ""
-          end
-          response = client.request(uri.to_s.sub('amqp://',''), {body: body, http_method: method_name, timeout: 5})
+          body = options[:body] || ""
+          body = HTTParty::HashConversions.to_params(options[:body]) if body.is_a?(Hash)
+          headers = options[:headers] || {}
+          response = client.request(uri.to_s.sub('amqp://',''), {body: body, http_method: method_name, headers: headers, timeout: 5})
           # TODO convert repsonse into HTTPResponse and assign to last_response
           klass = Net::HTTPResponse.send(:response_class,response.response_code.to_s)
           http_response = klass.new("1.1", response.response_code, "Found")
