@@ -21,7 +21,7 @@ module AMQParty
     def self.perform_request(http_method, path, options, &block)
       options = default_options.dup.merge(options)
       # TODO cookies support
-      Request.new(http_method, "amqp://#{path}", options).perform(&block)
+      Request.new(http_method, path, options).perform(&block)
     end
 
     def self.default_options
