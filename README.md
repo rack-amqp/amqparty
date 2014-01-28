@@ -1,6 +1,6 @@
 # Amqparty
 
-TODO: Write a gem description
+An adaptation of HTTParty for use with rack-amqp-client
 
 ## Installation
 
@@ -18,7 +18,14 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+AMQParty.get("amqp://localhost/queue.name/users")
+
+Uri scheme must be amqp or amqps. Hostname is the hostname of the
+rabbitmq server. First segment of the path is actually the queue name.
+Allows username/password in the host in the traditional
+user:password@hostname format.
+
+Post and put also work. Delete, head, options are untested.
 
 ## Contributing
 
