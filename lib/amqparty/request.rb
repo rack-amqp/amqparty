@@ -16,7 +16,7 @@ module AMQParty
       connection_options = {host: uri.host, ssl: ssl}
       connection_options[:user] = uri.user if uri.user
       connection_options[:password] = uri.password if uri.password
-      #binding.pry
+
       Rack::AMQP::Client.with_client(connection_options) do |client|
         Timeout.timeout(10) do
           method_name = http_method.name.split(/::/).last.upcase

@@ -3,7 +3,7 @@ require 'httparty'
 require 'rack/amqp/client'
 require 'amqparty/version'
 require 'amqparty/request'
-
+require 'amqparty/connection'
 
 module AMQParty
 
