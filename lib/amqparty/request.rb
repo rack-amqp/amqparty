@@ -13,7 +13,7 @@ module AMQParty
 
       ssl = uri.scheme.downcase == "amqps" ? true : false
       path = uri.path[1..-1]
-      connection_options = {host: uri.hostname, ssl: ssl}
+      connection_options = {host: uri.host, ssl: ssl}
       connection_options[:user] = uri.user if uri.user
       connection_options[:password] = uri.password if uri.password
       #binding.pry
