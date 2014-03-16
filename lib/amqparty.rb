@@ -1,9 +1,6 @@
 require 'net/http'
 require 'httparty'
 require 'rack/amqp/client'
-require 'amqparty/version'
-require 'amqparty/request'
-require 'amqparty/connection'
 
 module AMQParty
 
@@ -28,3 +25,7 @@ module AMQParty
       {}
     end
 end
+
+require 'amqparty/version'
+require 'amqparty/request'
+#require 'amqparty/connection'
