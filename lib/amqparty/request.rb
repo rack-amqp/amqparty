@@ -4,16 +4,15 @@ module AMQParty
 
   class Request < HTTParty::Request
     def perform(&block)
-      unless %w{amqp amqps}.include? uri.scheme.downcase
-        raise UnsupportedURIScheme, "#{uri.scheme} must be amqp or amqps"
+      unless %w{amqp}.include? uri.scheme.to_s.downcase
+        raise UnsupportedURIScheme, "#{uri.scheme} must be amqp"
       end
       validate
       setup_raw_request
       chunked_body = nil
 
-      ssl = uri.scheme.downcase == "amqps" ? true : false
       path = uri.path[1..-1]
-      connection_options = {host: uri.host, ssl: ssl}
+      connection_options = {host: uri.host}
       connection_options[:user] = uri.user if uri.user
       connection_options[:password] = uri.password if uri.password
 
