@@ -46,27 +46,30 @@ describe AMQParty do
 
     it 'calls Rack::AMQP::Client with the proper options' do
       # this method is a lot of stubbing, but I guess it's ok?
-      fake_client = double()
-      fake_client.should_receive(:request).with('test.simple/users.json', {
-        body: '',
-        http_method: 'GET',
-        headers: {},
-        timeout: 5
-      }) do
-        fake_response = double()
-        fake_response.stub(:response_code) { 200 }
-        fake_response.stub(:headers) { {'response_header' => 'foo'} }
-        fake_response.stub(:payload) { 'Hello World' }
-        fake_response
-      end
-      expect(Rack::AMQP::Client).to receive(:client).with({host: 'localhost'}).and_return(fake_client)
+      fake_with_client = -> {
+        fake_client = double()
+        fake_client.should_receive(:request).with('test.simple/users.json', {
+          body: '',
+          http_method: 'GET',
+          headers: {},
+          timeout: 5
+        }) do
+          fake_response = double()
+          fake_response.stub(:response_code) { 200 }
+          fake_response.stub(:headers) { {'response_header' => 'foo'} }
+          fake_response.stub(:payload) { 'Hello World' }
+          fake_response
+        end
+        fake_client
+      }
+      expect(Rack::AMQP::Client).to receive(:client).with({host: 'localhost'}).and_return(&fake_with_client)
       AMQParty.get('amqp://test.simple/users.json')
     end
 
   end
 
   it "integrates", brittle: true do
-    pending "Some better way to test integrations"
+    #pending "Some better way to test integrations"
     Timeout.timeout(3) do
       AMQParty.configure do |c|
         c.amqp_host = 'localhost'
