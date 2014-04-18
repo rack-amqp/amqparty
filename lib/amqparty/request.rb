@@ -15,8 +15,8 @@ module AMQParty
       path = "#{uri.host}#{uri.path}"
       connection_options = options[:amqp_client_options]
 
-      connection_options[:user]     = uri.user     if uri.user
-      connection_options[:password] = uri.password if uri.password
+      #connection_options[:user]     = uri.user     if uri.user
+      #connection_options[:password] = uri.password if uri.password
 
       Rack::AMQP::Client.with_client(connection_options) do |client|
         method_name = http_method.name.split(/::/).last.upcase

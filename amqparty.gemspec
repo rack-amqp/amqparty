@@ -6,11 +6,11 @@ require 'amqparty/version'
 Gem::Specification.new do |spec|
   spec.name          = "amqparty"
   spec.version       = AMQParty::VERSION
-  spec.authors       = ["Joshua Szmajda"]
+  spec.authors       = ["Joshua Szmajda", "John Nestoriak"]
   spec.email         = ["josh@optoro.com"]
-  spec.description   = %q{Drop-in replacement for HTTParty to talk to Rack-AMQP}
+  spec.description   = %q{AMQP-HTTP compliant replacement for HTTParty}
   spec.summary       = spec.description
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/rack-amqp/amqparty"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

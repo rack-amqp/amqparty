@@ -69,7 +69,7 @@ describe AMQParty do
   end
 
   it "integrates", brittle: true do
-    #pending "Some better way to test integrations"
+    pending "Some better way to test integrations"
     Timeout.timeout(3) do
       AMQParty.configure do |c|
         c.amqp_host = 'localhost'

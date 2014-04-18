@@ -1,6 +1,6 @@
 # Amqparty
 
-An adaptation of HTTParty for use with rack-amqp-client
+A AMQP-HTTP compliant modification of HTTParty for use with jackalope
 
 ## Installation
 
@@ -18,12 +18,22 @@ Or install it yourself as:
 
 ## Usage
 
-AMQParty.get("amqp://localhost/queue.name/users")
+First configure AMQParty to connect to your AMQP broker (RabbitMQ or
+other)
 
-Uri scheme must be amqp or amqps. Hostname is the hostname of the
-rabbitmq server. First segment of the path is actually the queue name.
-Allows username/password in the host in the traditional
-user:password@hostname format.
+```ruby
+AMQParty.configure do |c|
+  c.amqp_host = 'localhost'
+end
+```
+
+Then you can use it to talk to your service:
+
+```ruby
+AMQParty.get("amqp://queue.name/path")
+```
+
+Uri scheme must be amqp or amqps. Hostname is actually the queue name.
 
 Post and put also work. Delete, head, options are untested.
 
