@@ -2,6 +2,8 @@
 
 A AMQP-HTTP compliant modification of HTTParty for use with jackalope
 
+![Travis CI](https://travis-ci.org/rack-amqp/amqparty.svg?branch=master)
+
 ## Installation
 
 Add this line to your application's Gemfile:
