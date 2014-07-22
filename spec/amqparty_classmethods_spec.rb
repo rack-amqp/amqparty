@@ -38,6 +38,13 @@ describe AMQParty do
       end
       expect(AMQParty.configuration.amqp_host).to eq('localhost')
     end
+
+    it "allows configuration of a request timeout" do
+      AMQParty.configure do |c|
+        c.request_timeout = 10
+      end
+      expect(AMQParty.configuration.request_timeout).to eq(10)
+    end
   end
 
   describe '#get' do
