@@ -3,8 +3,8 @@ rvm:
   - 2.1.0
   - 2.0.0
   - 1.9.3
-  - 1.9.2
+  # Decided not to support 1.9.2 because HTTParty won't support it - 1.9.2
   - jruby-19mode # JRuby in 1.9 mode
   - ruby-head
   - jruby-head
-  - rbx
+  # Not trying to test because Travis doesn't like it - rbx
