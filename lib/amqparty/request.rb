@@ -23,8 +23,9 @@ module AMQParty
         body = options[:body] || ""
         body = HTTParty::HashConversions.to_params(options[:body]) if body.is_a?(Hash)
         headers = options[:headers] || {}
+        timeout = options[:timeout] || 5
 
-        response = client.request(path, {body: body, http_method: method_name, headers: headers, timeout: 5})
+        response = client.request(path, {body: body, http_method: method_name, headers: headers, timeout: timeout })
 
         klass = Net::HTTPResponse.send(:response_class,response.response_code.to_s)
         http_response = klass.new("1.1", response.response_code, "Found")

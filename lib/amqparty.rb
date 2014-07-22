@@ -35,11 +35,17 @@ module AMQParty
     end
 
     def self.default_options
-      {amqp_client_options: {host: configuration.amqp_host}}
+      {
+        amqp_client_options: {
+          host: configuration.amqp_host
+        },
+        request_timeout: configuration.request_timeout
+      }
     end
 
     class Configuration
       attr_accessor :amqp_host
+      attr_accessor :request_timeout
     end
 end
 
