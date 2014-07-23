@@ -45,6 +45,7 @@ describe AMQParty do
       end
       expect(AMQParty.configuration.request_timeout).to eq(10)
     end
+
   end
 
   describe '#get' do
@@ -52,24 +53,23 @@ describe AMQParty do
     it_behaves_like 'all request methods', 'get'
 
     it 'calls Rack::AMQP::Client with the proper options' do
+      AMQParty.configure do |c|
+        c.amqp_host = 'localhost'
+        c.request_timeout = 55
+      end
       # this method is a lot of stubbing, but I guess it's ok?
-      fake_with_client = -> {
-        fake_client = double()
-        expect(fake_client).to receive(:request).with('test.simple/users.json', {
-          body: '',
-          http_method: 'GET',
-          headers: {},
-          timeout: 5
-        }) do
-          fake_response = double()
-          allow(fake_response).to receive(:response_code) { 200 }
-          allow(fake_response).to receive(:headers) { {'response_header' => 'foo'} }
-          allow(fake_response).to receive(:payload) { 'Hello World' }
-          fake_response
-        end
-        fake_client
-      }
-      expect(Rack::AMQP::Client).to receive(:client).with({host: 'localhost'}).and_return(fake_with_client.call)
+      client = double()
+      params = { body: '', http_method: 'GET', headers: {}, timeout: 55 }
+
+      expect(client).to receive(:request).with('test.simple/users.json', params) do
+        response = double()
+        allow(response).to receive(:response_code) { 200 }
+        allow(response).to receive(:headers) { {'response_header' => 'foo'} }
+        allow(response).to receive(:payload) { 'Hello World' }
+        response
+      end
+
+      allow(Rack::AMQP::Client).to receive(:client).with({host: 'localhost'}).and_return(client)
       AMQParty.get('amqp://test.simple/users.json')
     end
 
