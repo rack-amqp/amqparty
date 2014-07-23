@@ -23,7 +23,7 @@ module AMQParty
         body = options[:body] || ""
         body = HTTParty::HashConversions.to_params(options[:body]) if body.is_a?(Hash)
         headers = options[:headers] || {}
-        timeout = options[:timeout] || 5
+        timeout = options[:request_timeout] || 5
 
         response = client.request(path, {body: body, http_method: method_name, headers: headers, timeout: timeout })
 
