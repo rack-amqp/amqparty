@@ -49,8 +49,8 @@ Valid configuration parameters are shown below:
 | password              |           password to use for the rabbitmq server connection           |         guest |
 | tls                   |             use TLS when connecting to the rabbitmq server             |         false |
 | tls\_ca\_certificates |           an array of paths to CA certificates in pem format           |            [] |
-| tls\_cert             |    path to the client certificate for SSL connections in PEM format    |           nil |
-| tls\_key              |    path to the client private key for SSL connections in PEM format    |           nil |
+| tls\_cert             |    path to the client certificate for SSL connections in pem format    |           nil |
+| tls\_key              |    path to the client private key for SSL connections in pem format    |           nil |
 | verify\_peer          |            disable/enable peer verification (used with TLS)            |         false |
 | request\_timeout      | value in seconds indicating the reply wait timeout for an amqp request |             5 |
 
