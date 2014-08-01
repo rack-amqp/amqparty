@@ -39,6 +39,21 @@ Uri scheme must be amqp or amqps. Hostname is actually the queue name.
 
 Post and put also work. Delete, head, options are untested.
 
+Valid configuration parameters are shown below:
+
+| Parameters            |                               Description                              | Default Value |
+|-----------------------|:----------------------------------------------------------------------:|--------------:|
+| amqp\_host            |             host name or IP address of the rabbitmq server             |     localhost |
+| port                  |                          rabbitmq server port                          |          5672 |
+| username              |           username to use for the rabbitmq server connection           |         guest |
+| password              |           password to use for the rabbitmq server connection           |         guest |
+| tls                   |             use TLS when connecting to the rabbitmq server             |         false |
+| tls\_ca\_certificates |           an array of paths to CA certificates in pem format           |            [] |
+| tls\_cert             |    path to the client certificate for SSL connections in PEM format    |           nil |
+| tls\_key              |    path to the client private key for SSL connections in PEM format    |           nil |
+| verify\_peer          |            disable/enable peer verification (used with TLS)            |         false |
+| request\_timeout      | value in seconds indicating the reply wait timeout for an amqp request |             5 |
+
 ## Contributing
 
 1. Fork it
