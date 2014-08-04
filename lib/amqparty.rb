@@ -28,24 +28,40 @@ module AMQParty
     def self.perform_request(http_method, path, options, &block)
       raise AMQParty::UnconfiguredError.new if configuration.amqp_host.nil?
 
-      options = default_options.dup.merge(options)
+      options = configuration.default_options.dup.merge(options)
       # TODO cookies support
       path = "#{path}/" if path =~ /\Aamqp?:\/\/([^\/])+\Z/
       Request.new(http_method, path, options).perform(&block)
     end
 
-    def self.default_options
-      {
-        amqp_client_options: {
-          host: configuration.amqp_host
-        },
-        request_timeout: configuration.request_timeout
-      }
-    end
-
     class Configuration
       attr_accessor :amqp_host
+      attr_accessor :port
       attr_accessor :request_timeout
+      attr_accessor :tls_ca_certificates
+      attr_accessor :verify_peer
+      attr_accessor :tls
+      attr_accessor :tls_key
+      attr_accessor :tls_cert
+      attr_accessor :username
+      attr_accessor :password
+
+      def default_options
+        {
+          amqp_client_options: {
+            host: amqp_host,
+            port: port || 5672,
+            tls_ca_certificates: tls_ca_certificates || [],
+            verify_peer: verify_peer || false,
+            tls: tls || false,
+            tls_key: tls_key,
+            tls_cert: tls_cert,
+            username: username || 'guest',
+            password: password || 'guest'
+          },
+          request_timeout: request_timeout || 5
+        }
+      end
     end
 end
 

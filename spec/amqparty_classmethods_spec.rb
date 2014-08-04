@@ -69,7 +69,19 @@ describe AMQParty do
         response
       end
 
-      allow(Rack::AMQP::Client).to receive(:client).with({host: 'localhost'}).and_return(client)
+      client_params = {
+        host: 'localhost',
+        port: 5672,
+        tls_ca_certificates: [],
+        verify_peer: false,
+        tls: false,
+        tls_key: nil,
+        tls_cert: nil,
+        username: 'guest',
+        password: 'guest'
+      }
+
+      expect(Rack::AMQP::Client).to receive(:client).with(client_params).and_return(client)
       AMQParty.get('amqp://test.simple/users.json')
     end
 
