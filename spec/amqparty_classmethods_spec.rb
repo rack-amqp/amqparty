@@ -50,26 +50,20 @@ describe AMQParty do
 
   describe '#get' do
 
-    it_behaves_like 'all request methods', 'get'
-
-    it 'calls Rack::AMQP::Client with the proper options' do
+    before :each do
       AMQParty.configure do |c|
         c.amqp_host = 'localhost'
         c.request_timeout = 55
       end
-      # this method is a lot of stubbing, but I guess it's ok?
-      client = double()
-      params = { body: '', http_method: 'GET', headers: {}, timeout: 55 }
+    end
 
-      expect(client).to receive(:request).with('test.simple/users.json', params) do
-        response = double()
-        allow(response).to receive(:response_code) { 200 }
-        allow(response).to receive(:headers) { {'response_header' => 'foo'} }
-        allow(response).to receive(:payload) { 'Hello World' }
-        response
-      end
+    let(:client) { double() }
+    let(:params) {
+      { body: '', http_method: 'GET', headers: {}, timeout: 55 }
+    }
 
-      client_params = {
+    let(:client_params) {
+      {
         host: 'localhost',
         port: 5672,
         tls_ca_certificates: [],
@@ -80,9 +74,36 @@ describe AMQParty do
         username: 'guest',
         password: 'guest'
       }
+    }
+
+    it_behaves_like 'all request methods', 'get'
+
+    it 'calls Rack::AMQP::Client with the proper options' do
+      # this method is a lot of stubbing, but I guess it's ok?
+      expect(client).to receive(:request).with('test.simple/users.json', params) do
+        response = double()
+        allow(response).to receive(:response_code) { 200 }
+        allow(response).to receive(:headers) { {'response_header' => 'foo'} }
+        allow(response).to receive(:payload) { 'Hello World' }
+        response
+      end
 
       expect(Rack::AMQP::Client).to receive(:client).with(client_params).and_return(client)
       AMQParty.get('amqp://test.simple/users.json')
+    end
+
+    it 'calls Rack::AMQP::Client with the correct path' do
+      # this mthod is a lot of stubbing, but I guess it's ok?
+      expect(client).to receive(:request).with('test.simple/users.json?login=foo', params) do
+        response = double()
+        allow(response).to receive(:response_code) { 200 }
+        allow(response).to receive(:headers) { {'response_header' => 'foo'} }
+        allow(response).to receive(:payload) { 'Hello World' }
+        response
+      end
+
+      expect(Rack::AMQP::Client).to receive(:client).with(client_params).and_return(client)
+      AMQParty.get('amqp://test.simple/users.json?login=foo')
     end
 
   end

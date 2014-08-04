@@ -13,6 +13,7 @@ module AMQParty
       chunked_body = nil
 
       path = "#{uri.host}#{uri.path}"
+      path = "#{path}?#{uri.query}" if uri.query
       connection_options = options[:amqp_client_options]
 
       Rack::AMQP::Client.with_client(connection_options) do |client|
