@@ -33,7 +33,7 @@ module AMQParty
             http_method: method_name,
             headers: headers,
             timeout: timeout,
-            async: async
+            async: !!async
           }
         )
 
