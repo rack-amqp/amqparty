@@ -27,7 +27,6 @@ module AMQParty
 
         headers = options[:headers] || {}
         timeout = options[:request_timeout]
-        async   = options[:async]
 
         response = client.request(path, {
             body: body,
@@ -38,25 +37,21 @@ module AMQParty
           }
         )
 
-        unless async
-          response_code = response.response_code
-          klass = Net::HTTPResponse.send(:response_class, response_code.to_s)
-          http_response = klass.new("1.1", response_code, "Found")
-          response.headers.each_pair do |key, value|
-            http_response.add_field key, value
-          end
-          http_response.body = response.payload
-
-          # TODO GIANT HACK
-          http_response.send(:instance_eval, "def body; @body; end")
-          self.last_response = http_response
+        response_code = response.response_code
+        klass = Net::HTTPResponse.send(:response_class, response_code.to_s)
+        http_response = klass.new("1.1", response_code, "Found")
+        response.headers.each_pair do |key, value|
+          http_response.add_field key, value
         end
+        http_response.body = response.payload
+        
+        # TODO GIANT HACK
+        http_response.send(:instance_eval, "def body; @body; end")
+        self.last_response = http_response
       end
 
-      unless options[:async]
-        handle_deflation unless http_method == Net::HTTP::Head
-        handle_response(chunked_body, &block)
-      end
+      handle_deflation unless http_method == Net::HTTP::Head
+      handle_response(chunked_body, &block)
     end
   end
 end
