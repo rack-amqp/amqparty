@@ -15,6 +15,7 @@ module AMQParty
       path = "#{uri.host}#{uri.path}"
       path = "#{path}?#{uri.query}" if uri.query
       connection_options = options[:amqp_client_options]
+      async              = options[:async]
 
       Rack::AMQP::Client.with_client(connection_options) do |client|
         method_name = http_method.name.split(/::/).last.upcase
@@ -31,7 +32,8 @@ module AMQParty
             body: body,
             http_method: method_name,
             headers: headers,
-            timeout: timeout
+            timeout: timeout,
+            async: !!async
           }
         )
 
@@ -42,7 +44,7 @@ module AMQParty
           http_response.add_field key, value
         end
         http_response.body = response.payload
-
+        
         # TODO GIANT HACK
         http_response.send(:instance_eval, "def body; @body; end")
         self.last_response = http_response

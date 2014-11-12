@@ -57,9 +57,15 @@ describe AMQParty do
       end
     end
 
-    let(:client) { double() }
+    let(:client) { double('Rack::AMQP::Client') }
     let(:params) {
-      { body: '', http_method: 'GET', headers: {}, timeout: 55 }
+      {
+        body: '',
+        http_method: 'GET',
+        headers: {},
+        timeout: 55,
+        async: false
+      }
     }
 
     let(:client_params) {
