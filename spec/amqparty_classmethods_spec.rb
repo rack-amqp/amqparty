@@ -5,7 +5,7 @@ shared_examples_for 'all request methods' do |meth|
     test = -> {
       AMQParty.send(meth, 'test.simple')
     }
-    expect(test).to raise_error(AMQParty::UnsupportedURISchemeError)
+    expect(test).to raise_error(HTTParty::UnsupportedURIScheme)
   end
 
   it 'blows up when not configured to talk to a amqp broker' do
