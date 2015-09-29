@@ -45,6 +45,7 @@ module AMQParty
       attr_accessor :tls_cert
       attr_accessor :username
       attr_accessor :password
+      attr_accessor :heartbeat
 
       def default_options
         {
@@ -57,7 +58,8 @@ module AMQParty
             tls_key: tls_key,
             tls_cert: tls_cert,
             username: username || 'guest',
-            password: password || 'guest'
+            password: password || 'guest',
+            heartbeat: heartbeat || 60
           },
           request_timeout: request_timeout || 5
         }
