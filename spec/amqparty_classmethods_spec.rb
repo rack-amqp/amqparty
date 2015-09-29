@@ -78,7 +78,8 @@ describe AMQParty do
         tls_key: nil,
         tls_cert: nil,
         username: 'guest',
-        password: 'guest'
+        password: 'guest',
+        heartbeat: 60
       }
     }
 
