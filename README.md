@@ -53,6 +53,7 @@ Valid configuration parameters are shown below:
 | tls\_key              |    path to the client private key for SSL connections in pem format    |           nil |
 | verify\_peer          |            disable/enable peer verification (used with TLS)            |         false |
 | request\_timeout      | value in seconds indicating the reply wait timeout for an amqp request |             5 |
+| hearbeat              |               value in seconds indicating the heartbeat                |            60 |
 
 ## Contributing
 
