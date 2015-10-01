@@ -2,7 +2,6 @@ require 'spec_helper'
 
 shared_examples_for 'all request methods' do |meth|
   it 'explodes gracefully when missing a protocol' do
-    binding.pry
     test = -> {
       AMQParty.send(meth, 'test.simple')
     }

@@ -2,7 +2,7 @@ module AMQParty
   class AMQPartyError < StandardError; end
   class UnsupportedURISchemeError < AMQPartyError; end
   class UnconfiguredError < AMQPartyError; end
-  HTTParty::Request::SupportedURISchemes += ['amqp', 'amqps']
+  HTTParty::Request::SupportedURISchemes = HTTParty::Request::SupportedURISchemes + ['amqp', 'amqps']
 
   class Request < HTTParty::Request
     def perform(&block)
