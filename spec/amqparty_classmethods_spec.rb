@@ -2,10 +2,11 @@ require 'spec_helper'
 
 shared_examples_for 'all request methods' do |meth|
   it 'explodes gracefully when missing a protocol' do
+    binding.pry
     test = -> {
       AMQParty.send(meth, 'test.simple')
     }
-    expect(test).to raise_error(HTTParty::UnsupportedURIScheme)
+    expect(test).to raise_error(AMQParty::UnsupportedURISchemeError)
   end
 
   it 'blows up when not configured to talk to a amqp broker' do
