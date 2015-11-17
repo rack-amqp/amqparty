@@ -2,7 +2,10 @@ module AMQParty
   class AMQPartyError < StandardError; end
   class UnsupportedURISchemeError < AMQPartyError; end
   class UnconfiguredError < AMQPartyError; end
-  HTTParty::Request::SupportedURISchemes = HTTParty::Request::SupportedURISchemes + ['amqp', 'amqps']
+  HTTParty::Request::SupportedURISchemesOriginal = HTTParty::Request::SupportedURISchemes
+  HTTParty::Request.send(:remove_const, "SupportedURISchemes")
+  HTTParty::Request::SupportedURISchemes = HTTParty::Request::SupportedURISchemesOriginal + ['amqp', 'amqps']
+
 
   class Request < HTTParty::Request
     def perform(&block)
