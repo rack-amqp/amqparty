@@ -86,6 +86,10 @@ describe AMQParty do
     it_behaves_like 'all request methods', 'get'
 
     it 'calls Rack::AMQP::Client with the proper options' do
+      AMQParty.configure do |c|
+        c.amqp_host = 'localhost'
+        c.request_timeout = 55
+      end
       # this method is a lot of stubbing, but I guess it's ok?
       expect(client).to receive(:request).with('test.simple/users.json', params) do
         response = double()
